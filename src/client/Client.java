@@ -49,7 +49,7 @@ public class Client {
         try {
             connection.send(new Message(MessageType.TEXT, text));
         } catch (IOException e) {
-            ConsoleHelper.writeMessage("ClientError " + e);
+            ConsoleHelper.writeMessage("Ошибка клиента " + e);
             clientConnected = false;
         }
     }
@@ -87,7 +87,7 @@ public class Client {
 
         protected void informAboutAddingNewUser(String data) {
             if (data.contains("Date:"))  {
-                ConsoleHelper.writeMessage("Пользователь " + data.substring(0, data.indexOf("Date:")) + " в чате. Дата подключения: " + data.substring(data.indexOf("Date:") + 5, data.length()));
+                ConsoleHelper.writeMessage("Пользователь " + data.substring(0, data.indexOf("Date:")) + " в чате. Дата подключения: " + data.substring(data.indexOf("Date:") + 5));
             }
             else
             {

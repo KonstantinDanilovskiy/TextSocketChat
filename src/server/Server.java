@@ -20,7 +20,6 @@ public class Server {
     private static Map<String, Connection> connectionMap = new ConcurrentHashMap<>();
     private static Map<String, String> connectionDateMap = new ConcurrentHashMap<>();
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM в HH:mm");
-    private static Date date;
 
 
     private static class Handler extends Thread {
@@ -44,7 +43,7 @@ public class Server {
             return data;
         }
 
-        private void notifyUsers(Connection connection, String userName, String stringDate) throws IOException {
+        private void notifyUsers(Connection connection, String userName) throws IOException {
             for (String name : connectionMap.keySet()) {
                 if (!name.equals(userName)) {
                     connection.send(new Message(MessageType.USER_ADDED, name + "Date:" + connectionDateMap.get(name)));
@@ -60,28 +59,28 @@ public class Server {
                     sendBroadcastMessage(newMessage);
                 }
                 else {
-                    ConsoleHelper.writeMessage("Received message is not a text.");
+                    ConsoleHelper.writeMessage("Полученное сообщение не является текстовым.");
                 }
             }
         }
 
         public void run() {
-            ConsoleHelper.writeMessage("The connection is established to remote address " + socket.getRemoteSocketAddress());
+            ConsoleHelper.writeMessage("Установлено соединение с удаленным клиентом " + socket.getRemoteSocketAddress());
             String userName = null;
             try (Connection connection = new Connection(socket)) {
                 userName = serverHandshake(connection);
                 sendBroadcastMessage(new Message(MessageType.USER_ADDED, userName));
-                date = new GregorianCalendar().getTime();
+                Date date = new GregorianCalendar().getTime();
                 String stringDate = dateFormat.format(date);
                 connectionDateMap.put(userName, stringDate);
-                notifyUsers(connection, userName, stringDate);
+                notifyUsers(connection, userName);
                 serverMainLoop(connection, userName);
 
 
             } catch(ClassNotFoundException e2) {
-                ConsoleHelper.writeMessage("support.Connection error " + e2);
+                ConsoleHelper.writeMessage("Ошибка соединения " + e2);
             } catch(IOException e1) {
-                ConsoleHelper.writeMessage("support.Connection error " + e1);
+                ConsoleHelper.writeMessage("Ошибка соединения " + e1);
             } finally {
                 if (userName != null) {
                     connectionMap.remove(userName);
@@ -103,7 +102,7 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        ConsoleHelper.writeMessage("Enter the port number for socket connection:");
+        ConsoleHelper.writeMessage("Введите номер порта для socket соединения:");
         int port = ConsoleHelper.readInt();
         try ( ServerSocket serverSocket = new ServerSocket(port)) {
             ConsoleHelper.writeMessage("Сервер запущен.");

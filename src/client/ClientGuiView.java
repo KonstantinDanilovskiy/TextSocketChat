@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ClientGuiView {
+class ClientGuiView {
     private final ClientGuiController controller;
 
     private JFrame frame = new JFrame("Чат");
@@ -15,7 +15,7 @@ public class ClientGuiView {
     private JPanel buttonPannel = new JPanel();
     private JTextField textFielForName = new JTextField(20);
 
-    public ClientGuiView(ClientGuiController controller) {
+    ClientGuiView(ClientGuiController controller) {
         this.controller = controller;
         initView();
     }
@@ -45,7 +45,7 @@ public class ClientGuiView {
         });
     }
 
-    public String getServerAddress() {
+    String getServerAddress() {
         return JOptionPane.showInputDialog(
                 frame,
                 "Введите адрес сервера (IP или localhost):",
@@ -53,7 +53,7 @@ public class ClientGuiView {
                 JOptionPane.QUESTION_MESSAGE);
     }
 
-    public int getServerPort() {
+    int getServerPort() {
         while (true) {
             String port = JOptionPane.showInputDialog(
                     frame,
@@ -72,7 +72,7 @@ public class ClientGuiView {
         }
     }
 
-    public String getUserName() {
+    String getUserName() {
         return JOptionPane.showInputDialog(
                 frame,
                 "Введите ваше имя:",
@@ -80,7 +80,7 @@ public class ClientGuiView {
                 JOptionPane.QUESTION_MESSAGE);
     }
 
-    public void notifyConnectionStatusChanged(boolean clientConnected) {
+    void notifyConnectionStatusChanged(boolean clientConnected) {
         textField.setEditable(clientConnected);
         if (clientConnected) {
             JOptionPane.showMessageDialog(
@@ -98,11 +98,11 @@ public class ClientGuiView {
 
     }
 
-    public void refreshMessages() {
+    void refreshMessages() {
         messages.append(controller.getModel().getNewMessage() + "\n");
     }
 
-    public void refreshUsers() {
+    void refreshUsers() {
         ClientGuiModel model = controller.getModel();
         StringBuilder sb = new StringBuilder();
         sb.append("-------->Пользователи<--------").append("\n");
@@ -112,7 +112,7 @@ public class ClientGuiView {
         users.setText(sb.toString());
     }
 
-    public void setUserName() {
+    void setUserName() {
         textFielForName.setText(controller.getName());
         textFielForName.setHorizontalAlignment(JTextField.CENTER);
         textFielForName.setFont(new Font(Font.DIALOG, Font.BOLD, 15));

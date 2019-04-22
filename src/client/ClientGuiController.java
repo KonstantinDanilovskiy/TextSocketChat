@@ -30,7 +30,7 @@ public class ClientGuiController extends Client {
         return getName();
     }
 
-    public ClientGuiModel getModel() {
+    ClientGuiModel getModel() {
         return model;
     }
 
@@ -47,7 +47,7 @@ public class ClientGuiController extends Client {
             String userName;
             if (data.contains("Date:"))  {
                 userName = data.substring(0, data.indexOf("Date:"));
-                String connectionDate = data.substring(data.indexOf("Date:") + 5, data.length());
+                String connectionDate = data.substring(data.indexOf("Date:") + 5);
                 model.setNewMessage("Пользователь " + userName + " в чате. Дата подключения: " + connectionDate);
             }
             else

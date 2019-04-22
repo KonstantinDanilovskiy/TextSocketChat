@@ -18,7 +18,7 @@ public class Connection implements Closeable {
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
-            ConsoleHelper.writeMessage("Thread is interrupted.");
+            ConsoleHelper.writeMessage("Thread прерван.");
         }
         in = new ObjectInputStream(socket.getInputStream());
     }
@@ -36,10 +36,6 @@ public class Connection implements Closeable {
         }
     }
 
-    public SocketAddress getRemoteSocketAddress() {
-        return socket.getRemoteSocketAddress();
-    }
-
     @Override
     public void close() {
         try {
@@ -47,7 +43,7 @@ public class Connection implements Closeable {
             out.close();
             in.close();
         } catch (IOException e) {
-            ConsoleHelper.writeMessage("Exception occurred: " + e);
+            ConsoleHelper.writeMessage("Произошла ошибка при закрытии потоков: " + e);
         }
 
     }

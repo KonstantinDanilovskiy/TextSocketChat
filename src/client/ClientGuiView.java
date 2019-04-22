@@ -24,7 +24,7 @@ class ClientGuiView {
         textField.setEditable(false);
         messages.setEditable(false);
         users.setEditable(false);
-        textFielForName.setEnabled(false);
+        textFielForName.setEditable(false);
 
         buttonPannel.setLayout(new FlowLayout());
         buttonPannel.add(textFielForName);

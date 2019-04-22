@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.SocketAddress;
 
 public class Connection implements Closeable {
     private final Socket socket;
@@ -31,8 +30,7 @@ public class Connection implements Closeable {
 
     public Message receive() throws IOException, ClassNotFoundException {
         synchronized (in) {
-            Message message = (Message) in.readObject();
-            return message;
+            return (Message) in.readObject();
         }
     }
 
